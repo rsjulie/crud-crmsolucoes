@@ -1,48 +1,65 @@
 <?php
 class Lista
 {
-    public static function selectAll()
+    private $conn;
+    private $table_name = "lista_tarefas";
+
+    public $id;
+    public $username;
+    public $password;
+
+    public function __construct($db){
+        $this->conn = $db;
+
+        $create_table = "
+            CREATE TABLE IF NOT EXISTS " . $this->table_name . " (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                username VARCHAR(255) NOT NULL,
+                password VARCHAR(255) NOT NULL
+            );
+        ";
+        $this->conn->exec($create_table);
+    }
+
+    public function selectAll()
     {
-        $con = Connection::getConn();
-        $sql = "SELECT * FROM lista_tarefas";
-        $sql = $con->prepare($sql);
+        $query = "SELECT * FROM " . $this->table_name;
+        $sql = $this->conn->prepare($query);
         $sql->execute();
 
         $result = array();
 
-        while ($row = $sql->fetchObject('Lista')) {
+        while ($row = $sql->fetch(PDO::FETCH_ASSOC)) {
             $result[] = $row;
         };
 
         return $result;
+        // return array();
     }
 
-    public static function create($titulo, $descricao)
+    public function create($titulo, $descricao)
     {
-        $con = Connection::getConn();
-        $sql = "INSERT INTO lista_tarefas (titulo, descricao) VALUES (:titulo, :descricao)";
-        $sql = $con->prepare($sql);
+        $query = "INSERT INTO " . $this->table_name . " (titulo, descricao) VALUES (:titulo, :descricao)";
+        $sql = $this->conn->prepare($query);
         $sql->bindValue(':titulo', $titulo);
         $sql->bindValue(':descricao', $descricao);
         $sql->execute();
     }
 
-    public static function update($titulo, $descricao, $id)
+    public function update($titulo, $descricao, $id)
     {
-        $con = Connection::getConn();
-        $sql = "UPDATE lista_tarefas SET titulo = :titulo, descricao = :descricao WHERE id = :id";
-        $sql = $con->prepare($sql);
+        $query = "UPDATE " . $this->table_name . " SET titulo = :titulo, descricao = :descricao WHERE id = :id";
+        $sql = $this->conn->prepare($query);
         $sql->bindValue(':titulo', $titulo);
         $sql->bindValue(':descricao', $descricao);
         $sql->bindValue(':id', $id);
         $sql->execute();
     }
 
-    public static function delete($id)
+    public function delete($id)
     {
-        $con = Connection::getConn();
-        $sql = "DELETE FROM lista_tarefas WHERE id = :id";
-        $sql = $con->prepare($sql);
+        $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
+        $sql = $this->conn->prepare($query);
         $sql->bindValue(':id', $id);
         $sql->execute();
     }
