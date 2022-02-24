@@ -1,7 +1,7 @@
 <?php
     class Connection {
         private $host = "us-cdbr-east-05.cleardb.net";
-        private $db_name = "heroku_eda8e2d7f65ec1e";
+        private $db_name = "crud";
         private $username = "ba67a860ca141d";
         private $password = "2f5934a9";
         private $conn;
@@ -27,7 +27,7 @@
                 echo "Database Name: " . $this->db_name . "\n";
                 echo "User: " . $this->username . "\n";
                 echo "Password " . $this->password . "\n";
-                http_response_code(404);
+                http_response_code(500);
                 exit();
             }
 
