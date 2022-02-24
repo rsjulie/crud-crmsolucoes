@@ -1,18 +1,18 @@
+const BASE_URL = 'https://blooming-citadel-76912.herokuapp.com';
+
 $(document).ready(function() {
     // Activate tooltip
     $('[data-toggle="tooltip"]').tooltip();
 
     $('#addForm').submit(function() {
-        console.log("TESTE");
         $('#addModal').modal('toggle')
         var request_data = {}
         request_data.titulo = $("#add-titulo").val()
         request_data.descricao = $("#add-descricao").val()
 
-        $.post(`http://localhost/crud-crmsolucoes/index.php?pagina=home&metodo=insert`, request_data, function(data) {
+        $.post(`${BASE_URL}/index.php?pagina=home&metodo=insert`, request_data, function(data) {
             console.log(data)
         });
-        // console.log(titulo);
         location.reload();
     })
 
@@ -28,7 +28,7 @@ function edit(e) {
         request_data.titulo = $("#update-titulo").val()
         request_data.descricao = $("#update-descricao").val()
 
-        $.post("http://localhost/crud-crmsolucoes/index.php?pagina=home&metodo=update", request_data, function(data) {
+        $.post(`${BASE_URL}/index.php?pagina=home&metodo=update`, request_data, function(data) {
             console.log(data)
         });
     })
@@ -40,7 +40,7 @@ function deleteItem(e) {
         var request_data = {}
         request_data.id = e
 
-        $.post("http://localhost/crud-crmsolucoes/index.php?pagina=home&metodo=delete", request_data, function(data) {
+        $.post(`${BASE_URL}/index.php?pagina=home&metodo=delete`, request_data, function(data) {
             console.log(data)
         });
     })
