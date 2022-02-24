@@ -14,8 +14,8 @@ class Lista
         $create_table = "
             CREATE TABLE IF NOT EXISTS " . $this->table_name . " (
                 id INT AUTO_INCREMENT PRIMARY KEY,
-                username VARCHAR(255) NOT NULL,
-                password VARCHAR(255) NOT NULL
+                titulo VARCHAR(255) NOT NULL,
+                descricao VARCHAR(255) NOT NULL
             );
         ";
         $this->conn->exec($create_table);
@@ -39,28 +39,47 @@ class Lista
 
     public function create($titulo, $descricao)
     {
-        $query = "INSERT INTO " . $this->table_name . " (titulo, descricao) VALUES (:titulo, :descricao)";
-        $sql = $this->conn->prepare($query);
-        $sql->bindValue(':titulo', $titulo);
-        $sql->bindValue(':descricao', $descricao);
-        $sql->execute();
+        try {
+            $query = "INSERT INTO " . $this->table_name . " (titulo, descricao) VALUES (:titulo, :descricao)";
+            $sql = $this->conn->prepare($query);
+            $sql->bindValue(':titulo', $titulo);
+            $sql->bindValue(':descricao', $descricao);
+            $sql->execute();
+        }
+        catch(Exception $e) {
+            echo 'Exception -> ';
+            var_dump($e->getMessage());
+        }
     }
 
     public function update($titulo, $descricao, $id)
     {
-        $query = "UPDATE " . $this->table_name . " SET titulo = :titulo, descricao = :descricao WHERE id = :id";
-        $sql = $this->conn->prepare($query);
-        $sql->bindValue(':titulo', $titulo);
-        $sql->bindValue(':descricao', $descricao);
-        $sql->bindValue(':id', $id);
-        $sql->execute();
+        try{
+            $query = "UPDATE " . $this->table_name . " SET titulo = :titulo, descricao = :descricao WHERE id = :id";
+            var_dump($query);
+            $sql = $this->conn->prepare($query);
+            $sql->bindValue(':titulo', $titulo);
+            $sql->bindValue(':descricao', $descricao);
+            $sql->bindValue(':id', $id);
+            $sql->execute();
+        }
+        catch(Exception $e) {
+            echo 'Exception -> ';
+            var_dump($e->getMessage());
+        }
     }
 
     public function delete($id)
     {
-        $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
-        $sql = $this->conn->prepare($query);
-        $sql->bindValue(':id', $id);
-        $sql->execute();
+        try{
+            $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
+            $sql = $this->conn->prepare($query);
+            $sql->bindValue(':id', $id);
+            $sql->execute();
+        }
+        catch(Exception $e) {
+            echo 'Exception -> ';
+            var_dump($e->getMessage());
+        }
     }
 }
