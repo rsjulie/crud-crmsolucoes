@@ -1,9 +1,9 @@
 <?php
     class Connection {
-        private $host = "localhost";
-        private $db_name = "project";
-        private $username = "root";
-        private $password = "";
+        private $host = "us-cdbr-east-05.cleardb.net";
+        private $db_name = "heroku_eda8e2d7f65ec1e";
+        private $username = "ba67a860ca141d";
+        private $password = "2f5934a9";
         private $conn;
 
         public function getConn(){
