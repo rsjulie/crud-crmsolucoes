@@ -1,21 +1,18 @@
 <?php
     class Connection {
-        private $host = "us-cdbr-east-05.cleardb.net";
-        private $db_name = "heroku_eda8e2d7f65ec1e";
-        private $username = "ba67a860ca141d";
-        private $password = "2f5934a9";
+        private $host;
+        private $db_name;
+        private $username;
+        private $password;
         private $conn;
 
         public function getConn(){
             $this->conn = null;
 
-            $db_url = getenv("CLEARDB_DATABASE_URL");
-            if($db_url){
-                $this->host = $db_url["host"];
-                $this->username = $db_url["user"];
-                $this->password = $db_url["pass"];
-                $this->db_name = substr($db_url["path"],1);
-            }
+            $this->host = getenv("DB_HOST") ? getenv("DB_HOST") : "localhost";
+            $this->db_name = getenv("DB_NAME") ? getenv("DB_NAME") : "crud";
+            $this->username = getenv("DB_USER") ? getenv("DB_USER") : "root";
+            $this->password = getenv("DB_PASSWORD") ? getenv("DB_PASSWORD") : "";
 
             try {
                 $this->conn = new PDO("mysql:host=" . $this->host . ";charset=utf8", $this->username, $this->password);
