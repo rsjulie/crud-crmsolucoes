@@ -27,7 +27,7 @@
                 echo "Database Name: " . $this->db_name . "\n";
                 echo "User: " . $this->username . "\n";
                 echo "Password " . $this->password . "\n";
-                http_response_code(500);
+                http_response_code(404);
                 exit();
             }
 
