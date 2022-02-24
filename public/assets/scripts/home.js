@@ -1,47 +1,41 @@
-const BASE_URL = 'https://blooming-citadel-76912.herokuapp.com';
+const BASE_URL = window.location.origin + window.location.pathname;
 
 $(document).ready(function() {
-    // Activate tooltip
     $('[data-toggle="tooltip"]').tooltip();
 
     $('#addForm').submit(function() {
         $('#addModal').modal('toggle')
-        var request_data = {}
-        request_data.titulo = $("#add-titulo").val()
-        request_data.descricao = $("#add-descricao").val()
+        const request_data = {
+            titulo: $("#add-titulo").val(),
+            descricao: $("#add-descricao").val(),
+        }
 
-        $.post(`${BASE_URL}/index.php?pagina=home&metodo=insert`, request_data, function(data) {
-            console.log(data)
-        });
-        location.reload();
+        $.post(`${BASE_URL}index.php?pagina=home&metodo=insert`, request_data);
     })
-
 });
 
-function edit(e) {
-    $("#editForm input")[0].value = e.parentElement.parentElement.children[1].textContent
-    $("#editForm input")[1].value = e.parentElement.parentElement.children[2].textContent
+function edit(element) {
+    $("#editForm input")[0].value = element.parentElement.parentElement.children[1].textContent
+    $("#editForm input")[1].value = element.parentElement.parentElement.children[2].textContent
     $('#editForm').submit(function() {
         $('#editModal').modal('toggle')
-        var request_data = {}
-        request_data.id = e.parentElement.parentElement.children[0].textContent
-        request_data.titulo = $("#update-titulo").val()
-        request_data.descricao = $("#update-descricao").val()
+        const request_data = {
+            id: element.parentElement.parentElement.children[0].textContent,
+            titulo: $("#update-titulo").val(),
+            descricao: $("#update-descricao").val(),
+        }
 
-        $.post(`${BASE_URL}/index.php?pagina=home&metodo=update`, request_data, function(data) {
-            console.log(data)
-        });
+        $.post(`${BASE_URL}index.php?pagina=home&metodo=update`, request_data);
     })
 }
 
-function deleteItem(e) {
+function deleteItem(id) {
     $('#deleteForm').submit(function() {
         $('#deleteModal').modal('toggle')
-        var request_data = {}
-        request_data.id = e
+        const request_data = {
+            id: id,
+        }
 
-        $.post(`${BASE_URL}/index.php?pagina=home&metodo=delete`, request_data, function(data) {
-            console.log(data)
-        });
+        $.post(`${BASE_URL}index.php?pagina=home&metodo=delete`, request_data);
     })
 }
