@@ -2,7 +2,7 @@
 class Lista
 {
     private $conn;
-    private $table_name = "lista_tarefas";
+    private $table_name = "items";
 
     public $id;
     public $username;
