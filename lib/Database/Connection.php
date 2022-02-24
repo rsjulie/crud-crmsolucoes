@@ -9,6 +9,14 @@
         public function getConn(){
             $this->conn = null;
 
+            $db_url = getenv("CLEARDB_DATABASE_URL");
+            if($db_url){
+                $this->host = $db_url["host"];
+                $this->username = $db_url["user"];
+                $this->password = $db_url["pass"];
+                $this->db_name = substr($db_url["path"],1);
+            }
+
             try {
                 $this->conn = new PDO("mysql:host=" . $this->host . ";charset=utf8", $this->username, $this->password);
                 $this->conn->exec("CREATE DATABASE IF NOT EXISTS " . $this->db_name . ";");
